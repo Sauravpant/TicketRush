@@ -23,6 +23,8 @@
     </properties>
 
     <modules>
+        <module>libs/common-web</module>
+        <module>libs/common-events</module>
         <module>services/auth-service</module>
     </modules>
 </project>
