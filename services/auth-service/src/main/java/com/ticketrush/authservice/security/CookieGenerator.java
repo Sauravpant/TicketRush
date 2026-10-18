@@ -28,12 +28,12 @@ public class CookieGenerator {
     }
 
     public void setRefreshTokenCookie(HttpServletResponse response, String token, long maxAgeSeconds) {
-        addCookie(response, refreshTokenCookieName, token, maxAgeSeconds, "/api/v1/auth");
+        addCookie(response, refreshTokenCookieName, token, maxAgeSeconds, "/auth");
     }
 
     public void clearAuthCookies(HttpServletResponse response) {
         addCookie(response, accessTokenCookieName, "", 0, "/");
-        addCookie(response, refreshTokenCookieName, "", 0, "/api/v1/auth");
+        addCookie(response, refreshTokenCookieName, "", 0, "/auth");
     }
 
     private void addCookie(HttpServletResponse response, String name, String value, long maxAgeSeconds, String path) {
