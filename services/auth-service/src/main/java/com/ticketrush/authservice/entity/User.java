@@ -60,4 +60,9 @@ public class User {
     @Builder.Default
     private Set<Role> roles = new HashSet<Role>();
 
+    @PreUpdate
+    public void onUpdate() {
+        this.updatedAt = Instant.now();
+    }
+
 }
