@@ -37,7 +37,10 @@ public class JwtTokenProvider {
         List<String> permissions = user.getRoles().stream().flatMap(role -> role.getPermissions().stream())
                 .map(Permission::getName).distinct().toList();
                 
-        return Jwts.builder().setSubject(user.getId().toString()).setIssuer(issuer)
+        return Jwts.builder()
+                .setHeaderParam("kid",keyProvider.getKeyId())
+                .setSubject(user.getId().toString())
+                .setIssuer(issuer)
                 .claim("email", user.getEmail())
                 .claim("roles", roles)
                 .claim("permissions", permissions)

@@ -46,6 +46,7 @@ jwt:
   access-token-ttl-minutes: 15
   refresh-token-ttl-days: 30
   issuer: ticketrush-auth-service
+  key-id: auth-service-key-1
   private-key-path: file:///C:/Users/user/ticketrush-local-keys/private_key.pem
   public-key-path: file:///C:/Users/user/ticketrush-local-keys/public_key.pem
 

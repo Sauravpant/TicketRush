@@ -17,11 +17,14 @@ public class JwtKeyProvider {
 
     private final PrivateKey privateKey;
     private final PublicKey publicKey;
+    private final String keyId;
 
     public JwtKeyProvider(@Value("${jwt.private-key-path}") Resource privateKeyResource,
-            @Value("${jwt.public-key-path}") Resource publicKeyResource) throws Exception {
+            @Value("${jwt.public-key-path}") Resource publicKeyResource,
+                          @Value("${jwt.key-id}") String keyId ) throws Exception {
         this.privateKey = loadPrivateKey(privateKeyResource);
         this.publicKey = loadPublicKey(publicKeyResource);
+        this.keyId = keyId;
     }
 
     public PrivateKey getPrivateKey() {
@@ -31,6 +34,11 @@ public class JwtKeyProvider {
     public PublicKey getPublicKey() {
         return publicKey;
     }
+
+    public String getKeyId() {
+        return keyId;
+    }
+
 
     private PrivateKey loadPrivateKey(Resource resource) throws Exception {
         String pem = readPemFile(resource, "PRIVATE KEY");
