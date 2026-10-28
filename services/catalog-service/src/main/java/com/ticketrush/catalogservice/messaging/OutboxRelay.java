@@ -4,6 +4,7 @@ import com.ticketrush.catalogservice.entity.OutboxEvent;
 import com.ticketrush.catalogservice.repository.OutboxEventRepository;
 import com.ticketrush.commonevents.KafkaTopics;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,6 +18,7 @@ import java.util.List;
 public class OutboxRelay {
 
     private static final String TOPIC = KafkaTopics.CATALOG_EVENTS;
+    private static final int BATCH_SIZE = 100;
 
     private final OutboxEventRepository outboxEventRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
@@ -28,7 +30,8 @@ public class OutboxRelay {
 
     @Scheduled(fixedDelay = 5000)
     public void relay() {
-        List<OutboxEvent> unpublished = outboxEventRepository.findByPublishedAtIsNullOrderByCreatedAtAsc();
+        List<OutboxEvent> unpublished = outboxEventRepository
+                .findByPublishedAtIsNullOrderByCreatedAtAsc(PageRequest.of(0, BATCH_SIZE));
         for (OutboxEvent event : unpublished) {
             publish(event);
         }
