@@ -55,7 +55,7 @@ public class VenueController {
         return ResponseEntity.ok(ApiResponse.success(venueService.listVenues(pageable)));
     }
 
-    // ── Sections ──
+    //  Sections
     @PostMapping("/{venueId}/sections")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<VenueSectionResponse>> createSection(
@@ -84,7 +84,7 @@ public class VenueController {
         return ResponseEntity.ok(ApiResponse.success(venueSectionService.listSections(venueId, pageable)));
     }
 
-    // ── Seats ──
+    // Seats
     @PostMapping("/{venueId}/sections/{sectionId}/seats")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<VenueSeatResponse>> createSeat(
