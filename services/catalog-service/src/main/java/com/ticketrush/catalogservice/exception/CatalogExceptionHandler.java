@@ -43,6 +43,26 @@ public class CatalogExceptionHandler extends GlobalExceptionHandlerSupport {
         return buildError(HttpStatus.FORBIDDEN, ex.getMessage(), req, List.of());
     }
 
+    @ExceptionHandler(InvalidEventStateException.class)
+    public ResponseEntity<ApiError> handleInvalidEventState(InvalidEventStateException ex, HttpServletRequest req) {
+        return buildError(HttpStatus.CONFLICT, ex.getMessage(), req);
+    }
+
+    @ExceptionHandler(EventNotPublishableException.class)
+    public ResponseEntity<ApiError> handleEventNotPublishable(EventNotPublishableException ex, HttpServletRequest req) {
+        return buildError(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage(), req);
+    }
+
+    @ExceptionHandler(ImageUploadException.class)
+    public ResponseEntity<ApiError> handleImageUpload(ImageUploadException ex, HttpServletRequest req) {
+        return buildError(HttpStatus.BAD_GATEWAY, "Failed to upload cover image", req);
+    }
+
+    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    public ResponseEntity<ApiError> handleOptimisticLock(ObjectOptimisticLockingFailureException ex, HttpServletRequest req) {
+        return buildError(HttpStatus.CONFLICT, "This record was modified by someone else — reload and try again.", req);
+    }
+
     @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
     public ResponseEntity<ApiError> handleOptimisticLockConflict(ObjectOptimisticLockingFailureException ex, HttpServletRequest req) {
         return buildError(
